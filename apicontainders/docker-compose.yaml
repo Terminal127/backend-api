@@ -1,0 +1,24 @@
+version: "3.8"  # Specify the Docker Compose file version
+
+services:
+  # FastAPI application service
+  fastapi:
+    build: .  # Build the image from the current directory
+    ports:
+      - "8000:8000"  # Expose port 8000 to host
+    depends_on:
+      - mongodb  # Ensure MongoDB starts first
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/imagedb  # Set MongoDB connection URI
+
+  # MongoDB service
+  mongodb:
+    image: mongo:latest  # Use the latest MongoDB image
+    ports:
+      - "27017:27017"  # Expose port 27017 to host
+    volumes:
+      - mongo-data:/data/db  # Persist MongoDB data
+
+volumes:
+  mongo-data:  # Named volume for MongoDB data
+
