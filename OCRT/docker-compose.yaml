@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+  
+  fastapi:
+    build: ./api/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    
+  mongodb:
+    image: "mongo:latest"
+    ports:
+      - "27010:27017"
+    volumes:
+      - api:/data/db
+
+
+
+  mongo:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
+    volumes:
+      - webdata:/data/db
+
+volumes:
+  webdata:
+  api:
+
+
